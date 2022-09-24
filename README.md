@@ -13,6 +13,7 @@
 
 - id
 - name
+- email
 - phone
 - bannerUrl
 - createdAt
