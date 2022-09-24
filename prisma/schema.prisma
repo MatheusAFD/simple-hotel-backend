@@ -16,18 +16,30 @@ model City {
   bannerUrl String
   createdAt DateTime @default(now())
 
-  hotels     Hotel[]
+  hotel     Hotel[]
+  restaurant Restaurants[]
 } 
 
 model Hotel {
-  id        String  @id @default(uuid()) 
-  cityId    String
-  bannerUrl String
-  latitude  String
-  longitude String
-  createdAt DateTime @default(now())
+  id          String  @id @default(uuid()) 
+  name        String  
+  cityId      String
+  bannerUrl   String
+  coordinates String 
+  createdAt   DateTime @default(now())
 
   city City @relation(fields: [cityId], references: [id])
 
   // userId    String
+}
+
+model Restaurants {
+  id          String @id @default(uuid())
+  name        String
+  cityId      String
+  bannerUrl   String
+  coordinates String
+  createdAt   DateTime @default(now())
+
+  city City @relation(fields: [cityId], references: [id])
 }
