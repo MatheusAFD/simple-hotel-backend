@@ -41,6 +41,8 @@ app.post("/cities/:id/hotels", async (request, response) => {
   const hotel = await prisma.hotel.create({
     data: {
       cityId,
+      isOpen: body.isOpen,
+      price: body.price,
       name: body.name,
       bannerUrl: body.bannerUrl,
       coordinates: body.coordinates.join(","),
@@ -67,6 +69,35 @@ app.get("/cities/:id/restaurants", async (request, response) => {
   });
 
   return response.json(restaurants);
+});
+
+app.get("/users/:id/orders", async (request, response) => {
+  const userId = request.params.id;
+
+  const orders = await prisma.order.findMany({
+    select: {
+      hotel: {
+        select: {
+          name: true,
+          price: true,
+          bannerUrl: true,
+          city: true,
+          order: {
+            select: {
+              createdAt: true,
+            },
+          },
+        },
+      },
+    },
+    where: {
+      user: {
+        id: userId,
+      },
+    },
+  });
+
+  return response.json(orders);
 });
 
 app.listen(3333);

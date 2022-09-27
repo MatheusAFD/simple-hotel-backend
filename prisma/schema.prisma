@@ -11,30 +11,32 @@ datasource db {
 }
 
 model City {
-  id        String @id @default(uuid()) 
+  id        String   @id @default(uuid())
   name      String
   bannerUrl String
   createdAt DateTime @default(now())
 
-  hotel     Hotel[]
+  hotel      Hotel[]
   restaurant Restaurants[]
-} 
+}
 
 model Hotel {
-  id          String  @id @default(uuid()) 
-  name        String  
+  id          String   @id @default(uuid())
+  name        String
+  isOpen      Boolean
+  price       Float
   cityId      String
   bannerUrl   String
-  coordinates String 
+  coordinates String
   createdAt   DateTime @default(now())
+  user        User[]
+  order       Order[]
 
   city City @relation(fields: [cityId], references: [id])
-
-  // userId    String
 }
 
 model Restaurants {
-  id          String @id @default(uuid())
+  id          String   @id @default(uuid())
   name        String
   cityId      String
   bannerUrl   String
@@ -42,4 +44,26 @@ model Restaurants {
   createdAt   DateTime @default(now())
 
   city City @relation(fields: [cityId], references: [id])
+}
+
+model User {
+  id       String  @id @default(uuid())
+  name     String
+  Email    String
+  password String
+  imgUrl   String
+  hotelId  String
+  order    Order[]
+
+  hotel Hotel @relation(fields: [hotelId], references: [id])
+}
+
+model Order {
+  id        String   @id @default(uuid())
+  orderId   String
+  hotelId   String
+  createdAt DateTime @default(now())
+
+  user  User  @relation(fields: [orderId], references: [id])
+  hotel Hotel @relation(fields: [hotelId], references: [id])
 }
