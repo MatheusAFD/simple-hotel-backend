@@ -25,6 +25,8 @@ model Hotel {
   name        String
   isOpen      Boolean
   price       Float
+  rooms       Int
+  breakfast   Boolean
   cityId      String
   bannerUrl   String
   coordinates String
