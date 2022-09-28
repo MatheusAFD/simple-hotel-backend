@@ -14,6 +14,7 @@ app.get("/cities", async (request, response) => {
       _count: {
         select: {
           hotel: true,
+          restaurant: true,
         },
       },
     },
@@ -29,6 +30,20 @@ app.get("/cities/:id/hotels", async (request, response) => {
     where: {
       cityId,
     },
+    select: {
+      name: true,
+      bannerUrl: true,
+      price: true,
+      rooms: true,
+      isOpen: true,
+      breakfast: true,
+      city: {
+        select: {
+          name: true,
+          bannerUrl: true,
+        },
+      },
+    },
   });
 
   return response.json(hotels);
@@ -42,6 +57,8 @@ app.post("/cities/:id/hotels", async (request, response) => {
     data: {
       cityId,
       isOpen: body.isOpen,
+      rooms: body.rooms,
+      breakfast: body.breakfast,
       price: body.price,
       name: body.name,
       bannerUrl: body.bannerUrl,
@@ -80,6 +97,7 @@ app.get("/users/:id/orders", async (request, response) => {
         select: {
           name: true,
           price: true,
+          isOpen: true,
           bannerUrl: true,
           city: true,
           order: {
