@@ -51,7 +51,7 @@ model Restaurants {
 model User {
   id       String  @id @default(uuid())
   name     String
-  Email    String
+  Email    String  @unique
   password String
   imgUrl   String
   hotelId  String
