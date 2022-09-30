@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
-    "build": "tsc --output public",
+    "build": "tsc",
     "dev": "tsnd --exit-child src/server.ts"
   },
   "repository": "https://github.com/MatheusAFD/simple-hotel-backend",
